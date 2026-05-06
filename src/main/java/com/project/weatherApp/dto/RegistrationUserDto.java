@@ -20,8 +20,8 @@ public class RegistrationUserDto {
     )
     private String login;
 
-    @NotBlank(message = "Login should not be empty.")
-    @Size(min = 6, max = 20, message = "Login should be between 6 and 30 characters.")
+    @NotBlank(message = "Password should not be empty.")
+    @Size(min = 6, max = 20, message = "Password should be between 6 and 20 characters.")
     @Pattern(
             regexp = "^[a-zA-Z0-9_.]+$",
             message = "The password contains invalid characters"
@@ -29,6 +29,6 @@ public class RegistrationUserDto {
     private String password;
 
     @NotBlank(message = "Login should not be empty.")
-    @Size(min = 6, max = 20, message = "Login should be between 6 and 30 characters.")
+    @Size(min = 6, max = 20, message = "Password should be between 6 and 20 characters.")
     private String repeatPassword;
 }

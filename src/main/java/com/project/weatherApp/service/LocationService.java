@@ -24,15 +24,15 @@ public class LocationService {
 
     @Transactional
     public void addLocation(LocationDto locationDto) {
-        if (locationRepository.findByNameAndUserId(locationDto.getName(), locationDto.getUserId()).isPresent()) {
+        if (locationRepository.findByCoordAndUserId(locationDto.getLatitude(), locationDto.getLongitude(), locationDto.getUserId()).isPresent()) {
             throw new LocationIsAlreadyExistsException("Location already exists");
         }
         locationRepository.save(LocationMapper.mapDtoToLocation(locationDto));
     }
 
     @Transactional
-    public void deleteLocation(String locationName, int userId) {
-        Optional<Location> location = locationRepository.findByNameAndUserId(locationName, userId);
+    public void deleteLocation(double locationLat, double locationLon, int userId) {
+        Optional<Location> location = locationRepository.findByCoordAndUserId(locationLat, locationLon, userId);
         locationRepository.delete(location.get());
     }
 

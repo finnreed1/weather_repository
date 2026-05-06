@@ -19,9 +19,13 @@ public class LocationRepository {
                 .getResultList();
     }
 
-    public Optional<Location> findByNameAndUserId(String locationName, int userId) {
-        return em.createQuery("SELECT l FROM Location l WHERE l.name = :name AND l.userId = :userId")
-                .setParameter("name", locationName).setParameter("userId", userId)
+    public Optional<Location> findByCoordAndUserId(double locationLat, double locationLon, int userId) {
+        return em.createQuery("SELECT l FROM Location l WHERE ROUND(l.latitude, 4) = ROUND(:lat, 4)" +
+                        "AND ROUND(l.longitude, 4) = ROUND(:lon, 4)" +
+                        "AND l.userId = :userId")
+                .setParameter("lat", locationLat)
+                .setParameter("lon", locationLon)
+                .setParameter("userId", userId)
                 .getResultList().stream().findFirst();
     }
 

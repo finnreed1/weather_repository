@@ -47,14 +47,15 @@ public class HomePageController {
 
     @PostMapping("/delete")
     public String deleteLocation(@CookieValue(value = "MY_SESSION_ID", required = false, defaultValue = "") String sessionFromCookie,
-                                 @RequestParam("locationName") String locationName) {
+                                 @RequestParam("locationLat") String locationLat,
+                                 @RequestParam("locationLon") String locationLon) {
         Session session = sessionService.getSession(UUID.fromString(sessionFromCookie));
 
         sessionUtil.checkActiveSession(session);
 
         int userId = session.getUserId();
 
-        locationService.deleteLocation(locationName, userId);
+        locationService.deleteLocation(Double.parseDouble(locationLat), Double.parseDouble(locationLon), userId);
 
         return "redirect:/home";
     }
