@@ -4,6 +4,7 @@ import com.project.weatherApp.dto.RegistrationUserDto;
 import com.project.weatherApp.service.UserService;
 import com.project.weatherApp.validate.PasswordValidator;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class SignUpController {
 
     public final UserService userService;
 
+    public final PasswordValidator passwordValidator;
+
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     @GetMapping
@@ -39,7 +42,7 @@ public class SignUpController {
             return "sign-up";
         }
 
-        if (!PasswordValidator.isPasswordsMatch(regUserDto.getPassword(), regUserDto.getRepeatPassword())){
+        if (!passwordValidator.isPasswordsMatch(regUserDto.getPassword(), regUserDto.getRepeatPassword())){
             logger.info("Passwords is not match.");
             bindingResult.rejectValue("repeatPassword", "error.user", "Passwords is not match.");
             return "sign-up";

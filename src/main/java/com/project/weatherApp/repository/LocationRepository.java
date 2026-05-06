@@ -19,19 +19,7 @@ public class LocationRepository {
                 .getResultList();
     }
 
-    public Optional findByName(String city) {
-        return em.createQuery("SELECT l FROM Location l WHERE l.name = :city")
-                .setParameter("city", city)
-                .getResultList().stream().findFirst();
-    }
-
-    public Optional findByLatAndLon(double lat, double lon) {
-        return em.createQuery("SELECT l FROM Location l WHERE l.latitude = :lat AND l.longitude = :lon")
-                .setParameter("lat", lat).setParameter("lon", lon)
-                .getResultList().stream().findFirst();
-    }
-
-    public Optional findByNameAndUserId(String locationName, int userId) {
+    public Optional<Location> findByNameAndUserId(String locationName, int userId) {
         return em.createQuery("SELECT l FROM Location l WHERE l.name = :name AND l.userId = :userId")
                 .setParameter("name", locationName).setParameter("userId", userId)
                 .getResultList().stream().findFirst();

@@ -2,10 +2,8 @@ package com.project.weatherApp.controller;
 
 import com.project.weatherApp.service.SessionService;
 import com.project.weatherApp.util.CookieUtils;
-import com.project.weatherApp.util.SessionUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

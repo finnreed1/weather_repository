@@ -32,13 +32,13 @@ public class OpenWeatherApiTest {
     private OpenWeatherApiClient openWeatherApiClient;
 
     private static final String EXAMPLE_CITY = "London";
-    private static final String EXAMPLE_UNCORRECT_CITY = "Poop";
+    private static final String EXAMPLE_UNCORRECT_CITY = "__---_";
     private static final String EXAMPLE_LAT = "51.50";
     private static final String EXAMPLE_LON = "-0.11";
 
     @Test
     void test_getWeatherForCity_geo() {
-        assertThat(openWeatherApiClient.getWeatherByCity(EXAMPLE_CITY).isEmpty()).isFalse();
+        assertThat(openWeatherApiClient.getLocationsByCityName(EXAMPLE_CITY).isEmpty()).isFalse();
     }
 
     @Test
@@ -48,6 +48,6 @@ public class OpenWeatherApiTest {
 
     @Test
     void test_weatherGeoNotFoundException() {
-        Assertions.assertThrows(WeatherGeoNotFoundException.class, () -> openWeatherApiClient.getWeatherByCity(EXAMPLE_UNCORRECT_CITY));
+        Assertions.assertThrows(WeatherGeoNotFoundException.class, () -> openWeatherApiClient.getLocationsByCityName(EXAMPLE_UNCORRECT_CITY));
     }
 }

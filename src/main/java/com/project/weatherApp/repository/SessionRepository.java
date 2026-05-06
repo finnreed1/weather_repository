@@ -5,7 +5,9 @@ import com.project.weatherApp.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +32,12 @@ public class SessionRepository {
         return sessions.stream().findFirst();
     }
 
+    @Modifying
+    @Transactional
     public void delete(Session session) {
+        if (!em.contains(session)) {
+            session = em.merge(session);
+        }
         em.remove(session);
     }
 }

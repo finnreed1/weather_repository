@@ -7,6 +7,7 @@ import com.project.weatherApp.service.UserService;
 import com.project.weatherApp.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,10 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.UUID;
 
 @Controller
@@ -26,7 +25,6 @@ import java.util.UUID;
 public class SignInController {
 
     public final UserService userService;
-    public final SessionService sessionService;
     public final AuthenticationService authService;
     public final CookieUtils cookieUtils;
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);

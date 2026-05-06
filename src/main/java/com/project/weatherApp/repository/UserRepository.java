@@ -7,6 +7,7 @@ import jakarta.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -21,13 +22,10 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public User findByLogin(String login) {
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.login = :login");
-        query.setParameter("login", login);
-        return (User) query.getSingleResult();
-    }
-
-    public void delete(User user) {
-        em.remove(user);
+    public Optional<User> findByLogin(String login) {
+        List query = em.createQuery("SELECT u FROM User u WHERE u.login = :login").
+                setParameter("login", login)
+                .getResultList();
+        return query.stream().findFirst();
     }
 }

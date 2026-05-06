@@ -3,8 +3,8 @@ package com.project.weatherApp.controller;
 import com.project.weatherApp.model.Session;
 import com.project.weatherApp.service.LocationService;
 import com.project.weatherApp.service.SessionService;
-import com.project.weatherApp.util.CookieUtils;
-import com.project.weatherApp.util.SessionUtil;
+import com.project.weatherApp.util.ControllerUtils;
+import com.project.weatherApp.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,27 +19,28 @@ import java.util.UUID;
 public class HomePageController {
 
     @Autowired
-    private CookieUtils cookieUtils;
+    private ControllerUtils controllerUtils;
 
     @Autowired
     private SessionService sessionService;
 
     @Autowired
-    private SessionUtil sessionUtil;
+    private SessionUtils sessionUtil;
+
     @Autowired
     private LocationService locationService;
 
     @GetMapping("/home")
     public String homePage(@CookieValue(value ="MY_SESSION_ID", required = false, defaultValue = "") String sessionFromCookie, Model model) {
         if (sessionFromCookie == null || sessionFromCookie.isEmpty()) {
-            cookieUtils.addEmptyAttributes(model);
+            controllerUtils.addEmptyAttributes(model);
             return "index";
         }
         Session session = sessionService.getSession(UUID.fromString(sessionFromCookie));
 
         sessionUtil.checkActiveSession(session);
 
-        cookieUtils.addNonEmptyAttributes(model, session);
+        controllerUtils.addNonEmptyAttributes(model, session);
 
         return "index";
     }

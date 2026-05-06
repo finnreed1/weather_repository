@@ -2,20 +2,18 @@ package com.project.weatherApp.util;
 
 import com.project.weatherApp.exception.InvalidSessionException;
 import com.project.weatherApp.model.Session;
-import com.project.weatherApp.repository.SessionRepository;
-import com.project.weatherApp.service.SessionService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class SessionUtil {
+public class SessionUtils {
     public static final int SESSION_DURATION_SECONDS = 60 * 60 * 3;
+    public static final ZoneId ZONE_MOSCOW = ZoneId.of("Europe/Moscow");
 
     public Session createSessionEntity(int userId){
         UUID sessionId = UUID.randomUUID();
@@ -29,10 +27,10 @@ public class SessionUtil {
     }
 
     private boolean isExpiredSession(Session session) {
-        return LocalDateTime.now().isAfter(session.getExpiresAt());
+        return LocalDateTime.now(ZONE_MOSCOW).isAfter(session.getExpiresAt());
     }
 
     private static LocalDateTime generateExpiresAt(){
-        return LocalDateTime.now().plusSeconds(SESSION_DURATION_SECONDS);
+        return LocalDateTime.now(ZONE_MOSCOW).plusSeconds(SESSION_DURATION_SECONDS);
     }
 }
