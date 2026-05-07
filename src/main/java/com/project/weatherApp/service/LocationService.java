@@ -43,7 +43,9 @@ public class LocationService {
         if (!locations.isEmpty()) {
             List<WeatherResponseDto> weatherResponseDtoList = new ArrayList<>();
             for (Location location : locations) {
-                weatherResponseDtoList.add(openWeatherApiClient.getWeatherByLatAndLon(location.getLatitude(), location.getLongitude()).get());
+                WeatherResponseDto weatherResponseDto = openWeatherApiClient.getWeatherByLatAndLon(location.getLatitude(), location.getLongitude()).get();
+                weatherResponseDto.setName(location.getName());
+                weatherResponseDtoList.add(weatherResponseDto);
             }
             return weatherResponseDtoList;
         } else {
